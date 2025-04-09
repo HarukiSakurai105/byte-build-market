@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import LanguageCurrencySelector from "./LanguageCurrencySelector";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -42,7 +43,7 @@ const Navbar = () => {
             </Link>
           </nav>
 
-          {/* Search and Cart */}
+          {/* Search, Language/Currency and Cart */}
           <div className="hidden md:flex items-center space-x-4">
             <div className="relative">
               <Input 
@@ -52,6 +53,7 @@ const Navbar = () => {
               />
               <Search className="h-4 w-4 absolute left-3 top-3 text-gray-400" />
             </div>
+            <LanguageCurrencySelector />
             <Button variant="ghost" size="icon">
               <User className="h-5 w-5 text-gray-300" />
             </Button>
@@ -65,6 +67,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden">
+            <LanguageCurrencySelector />
             <Button variant="ghost" size="icon" onClick={toggleMobileMenu}>
               <Menu className="h-6 w-6 text-gray-300" />
             </Button>
