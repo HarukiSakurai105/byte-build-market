@@ -1,10 +1,4 @@
-
 import { useState } from "react";
-import { 
-  Slider, 
-  CheckboxItem, 
-  CheckboxIndicator 
-} from "@radix-ui/react-checkbox";
 import { 
   Accordion,
   AccordionContent,
