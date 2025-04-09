@@ -5,9 +5,11 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import LanguageCurrencySelector from "./LanguageCurrencySelector";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { translate } = useLanguage();
   
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -27,19 +29,19 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             <Link to="/" className="text-gray-300 hover:text-white transition-colors">
-              Home
+              {translate("home")}
             </Link>
             <Link to="/category/laptops" className="text-gray-300 hover:text-white transition-colors">
-              Laptops
+              {translate("laptops")}
             </Link>
             <Link to="/category/gaming-pcs" className="text-gray-300 hover:text-white transition-colors">
-              Gaming PCs
+              {translate("gamingPCs")}
             </Link>
             <Link to="/category/components" className="text-gray-300 hover:text-white transition-colors">
-              Components
+              {translate("components")}
             </Link>
             <Link to="/deals" className="text-gray-300 hover:text-white transition-colors">
-              Deals
+              {translate("deals")}
             </Link>
           </nav>
 
@@ -48,7 +50,7 @@ const Navbar = () => {
             <div className="relative">
               <Input 
                 type="text" 
-                placeholder="Search products..." 
+                placeholder={translate("searchProducts")}
                 className="w-64 bg-gray-800 border-gray-700 text-gray-200 pl-10"
               />
               <Search className="h-4 w-4 absolute left-3 top-3 text-gray-400" />
@@ -86,29 +88,29 @@ const Navbar = () => {
             <div className="relative mb-4 px-2">
               <Input 
                 type="text" 
-                placeholder="Search products..." 
+                placeholder={translate("searchProducts")}
                 className="w-full bg-gray-800 border-gray-700 text-gray-200 pl-10"
               />
               <Search className="h-4 w-4 absolute left-5 top-3 text-gray-400" />
             </div>
             <nav className="flex flex-col space-y-3 px-2">
               <Link to="/" className="text-gray-300 hover:text-white py-2 transition-colors">
-                Home
+                {translate("home")}
               </Link>
               <Link to="/category/laptops" className="text-gray-300 hover:text-white py-2 transition-colors">
-                Laptops
+                {translate("laptops")}
               </Link>
               <Link to="/category/gaming-pcs" className="text-gray-300 hover:text-white py-2 transition-colors">
-                Gaming PCs
+                {translate("gamingPCs")}
               </Link>
               <Link to="/category/components" className="text-gray-300 hover:text-white py-2 transition-colors">
-                Components
+                {translate("components")}
               </Link>
               <Link to="/deals" className="text-gray-300 hover:text-white py-2 transition-colors">
-                Deals
+                {translate("deals")}
               </Link>
               <Link to="/account" className="text-gray-300 hover:text-white py-2 transition-colors">
-                My Account
+                {translate("myAccount")}
               </Link>
             </nav>
           </div>

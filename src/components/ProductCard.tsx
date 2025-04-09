@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Star, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export interface ProductCardProps {
   id: number;
@@ -27,6 +28,8 @@ const ProductCard = ({
   isNew = false,
   isFeatured = false
 }: ProductCardProps) => {
+  const { formatPrice, translate } = useLanguage();
+  
   return (
     <div className="bg-card rounded-lg overflow-hidden shadow-md card-hover border border-gray-800">
       <div className="relative h-48 md:h-64 overflow-hidden">
@@ -36,11 +39,13 @@ const ProductCard = ({
           className="product-image hover:scale-110"
         />
         {isNew && (
-          <Badge className="absolute top-2 left-2 bg-tech-blue text-white">New</Badge>
+          <Badge className="absolute top-2 left-2 bg-tech-blue text-white">
+            {translate("new")}
+          </Badge>
         )}
         {oldPrice && (
           <Badge className="absolute top-2 right-2 bg-tech-red text-white">
-            Sale
+            {translate("sale")}
           </Badge>
         )}
       </div>
@@ -70,17 +75,17 @@ const ProductCard = ({
           <div>
             {oldPrice ? (
               <div className="flex items-center">
-                <span className="font-bold text-xl mr-2">${price.toFixed(2)}</span>
-                <span className="text-gray-400 line-through text-sm">${oldPrice.toFixed(2)}</span>
+                <span className="font-bold text-xl mr-2">{formatPrice(price)}</span>
+                <span className="text-gray-400 line-through text-sm">{formatPrice(oldPrice)}</span>
               </div>
             ) : (
-              <span className="font-bold text-xl">${price.toFixed(2)}</span>
+              <span className="font-bold text-xl">{formatPrice(price)}</span>
             )}
           </div>
           
           <Button size="sm" className="bg-tech-blue hover:bg-tech-blue/90">
             <ShoppingCart className="h-4 w-4 mr-1" />
-            Add
+            {translate("add")}
           </Button>
         </div>
       </div>

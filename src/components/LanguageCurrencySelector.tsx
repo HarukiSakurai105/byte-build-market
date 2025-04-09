@@ -1,30 +1,23 @@
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { 
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { Globe, DollarSign, CircleDollarSign } from "lucide-react";
-
-type Language = "en" | "vi";
-type Currency = "USD" | "VND";
+import { Globe, DollarSign } from "lucide-react";
+import { useLanguage, Language, Currency } from "@/contexts/LanguageContext";
 
 const LanguageCurrencySelector = () => {
-  const [language, setLanguage] = useState<Language>("en");
-  const [currency, setCurrency] = useState<Currency>("USD");
+  const { language, currency, setLanguage, setCurrency } = useLanguage();
 
   const handleLanguageChange = (newLanguage: Language) => {
     setLanguage(newLanguage);
-    // You could add additional logic here to change the language throughout the app
   };
 
   const handleCurrencyChange = (newCurrency: Currency) => {
     setCurrency(newCurrency);
-    // You could add additional logic here to update prices throughout the app
   };
 
   return (
@@ -39,7 +32,7 @@ const LanguageCurrencySelector = () => {
             </span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700">
+        <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700 z-50">
           <DropdownMenuItem 
             className={`text-gray-200 hover:text-white ${language === "en" ? "bg-gray-700" : ""}`}
             onClick={() => handleLanguageChange("en")}
@@ -65,7 +58,7 @@ const LanguageCurrencySelector = () => {
             </span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700">
+        <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700 z-50">
           <DropdownMenuItem 
             className={`text-gray-200 hover:text-white ${currency === "USD" ? "bg-gray-700" : ""}`}
             onClick={() => handleCurrencyChange("USD")}
