@@ -84,7 +84,10 @@ const GamingPCs = () => {
           {/* Main Content */}
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Filters Sidebar */}
-            <ProductFilters onFilterChange={handleFilterChange} />
+            <ProductFilters 
+              onFilterChange={handleFilterChange}
+              onSortChange={handleSortChange}  // Add this line
+            />
             
             {/* Products Grid */}
             <div className="flex-1">
