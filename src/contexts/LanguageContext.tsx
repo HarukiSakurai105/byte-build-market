@@ -1,23 +1,21 @@
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
-
-export type Language = "en" | "vi";
-export type Currency = "USD" | "VND";
-
-// Exchange rate (1 USD = X VND)
-const VND_EXCHANGE_RATE = 23000;
-
-interface LanguageContextType {
-  language: Language;
-  currency: Currency;
-  setLanguage: (lang: Language) => void;
-  setCurrency: (curr: Currency) => void;
-  formatPrice: (priceInUSD: number) => string;
-  translate: (key: string) => string;
+// Define translation interface
+interface Translations {
+  [key: string]: {
+    [key: string]: string;
+  };
 }
 
-const translations = {
+// Predefined translations
+const translations: Translations = {
   en: {
+    login: 'Login',
+    signup: 'Sign Up',
+    emailPlaceholder: 'Enter your email',
+    passwordPlaceholder: 'Enter your password',
+    noAccount: "Don't have an account?",
+    signUp: 'Sign up',
     home: "Home",
     laptops: "Laptops",
     gamingPCs: "Gaming PCs",
@@ -40,6 +38,12 @@ const translations = {
     noDealsFound: "No deals found at the moment.",
   },
   vi: {
+    login: 'Đăng nhập',
+    signup: 'Đăng ký',
+    emailPlaceholder: 'Nhập email của bạn',
+    passwordPlaceholder: 'Nhập mật khẩu',
+    noAccount: 'Chưa có tài khoản?',
+    signUp: 'Đăng ký',
     home: "Trang Chủ",
     laptops: "Máy Tính Xách Tay",
     gamingPCs: "PC Gaming",

@@ -1,9 +1,8 @@
-
 import { ShoppingCart, Menu, Search, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LanguageCurrencySelector from "./LanguageCurrencySelector";
 import { useLanguage } from "@/contexts/LanguageContext";
 import CartDropdown from "./CartDropdown";
@@ -11,9 +10,14 @@ import CartDropdown from "./CartDropdown";
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { translate } = useLanguage();
+  const navigate = useNavigate(); // Add useNavigate hook
   
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleLoginClick = () => {
+    navigate('/login'); // Navigate to login page
   };
 
   return (
@@ -57,7 +61,7 @@ const Navbar = () => {
               <Search className="h-4 w-4 absolute left-3 top-3 text-gray-400" />
             </div>
             <LanguageCurrencySelector />
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" onClick={handleLoginClick}>
               <User className="h-5 w-5 text-gray-300" />
             </Button>
             <CartDropdown />
