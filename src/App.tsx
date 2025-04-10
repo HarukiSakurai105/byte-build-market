@@ -13,7 +13,8 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import Laptops from "./pages/Laptops";
 import Components from "./pages/Components";
 import Deals from "./pages/Deals";
-import Login from "./pages/Login"; // Add this import
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 const App = () => {
   const [queryClient] = useState(() => new QueryClient());
@@ -32,7 +33,8 @@ const App = () => {
               <Route path="/category/components" element={<Components />} />
               <Route path="/deals" element={<Deals />} />
               <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/login" element={<Login />} /> {/* Add login route */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

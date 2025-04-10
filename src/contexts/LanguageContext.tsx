@@ -1,4 +1,22 @@
+
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+
+// Define types for language and currency
+export type Language = "en" | "vi";
+export type Currency = "USD" | "VND";
+
+// Define exchange rate
+const VND_EXCHANGE_RATE = 24000; // USD to VND conversion rate
+
+// Define context type
+export interface LanguageContextType {
+  language: Language;
+  currency: Currency;
+  setLanguage: (language: Language) => void;
+  setCurrency: (currency: Currency) => void;
+  formatPrice: (priceInUSD: number) => string;
+  translate: (key: string) => string;
+}
 
 // Define translation interface
 interface Translations {

@@ -1,22 +1,22 @@
 
 import React from 'react';
-import { SignIn } from '@clerk/clerk-react';
+import { SignUp } from '@clerk/clerk-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-const Login = () => {
+const SignUp = () => {
   const { translate } = useLanguage();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-tech-black">
       <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-xl shadow-lg">
         <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-tech-blue to-tech-purple bg-clip-text text-transparent">
-          {translate('login')}
+          {translate('signup')}
         </h2>
         <div className="flex justify-center">
-          <SignIn 
+          <SignUp 
             routing="path" 
-            path="/login"
-            signUpUrl="/signup"
+            path="/signup"
+            signInUrl="/login"
             appearance={{
               elements: {
                 formButtonPrimary: "bg-tech-blue hover:bg-blue-700 text-white",
@@ -37,4 +37,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

@@ -1,3 +1,4 @@
+
 import { ShoppingCart, Menu, Search, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,18 +7,19 @@ import { Link, useNavigate } from "react-router-dom";
 import LanguageCurrencySelector from "./LanguageCurrencySelector";
 import { useLanguage } from "@/contexts/LanguageContext";
 import CartDropdown from "./CartDropdown";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { translate } = useLanguage();
-  const navigate = useNavigate(); // Add useNavigate hook
+  const navigate = useNavigate();
   
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const handleLoginClick = () => {
-    navigate('/login'); // Navigate to login page
+    navigate('/login');
   };
 
   return (
@@ -61,9 +63,25 @@ const Navbar = () => {
               <Search className="h-4 w-4 absolute left-3 top-3 text-gray-400" />
             </div>
             <LanguageCurrencySelector />
-            <Button variant="ghost" size="icon" onClick={handleLoginClick}>
-              <User className="h-5 w-5 text-gray-300" />
-            </Button>
+            
+            {/* Authentication UI */}
+            <SignedIn>
+              <UserButton 
+                afterSignOutUrl="/"
+                appearance={{
+                  elements: {
+                    userButtonAvatarBox: "w-9 h-9",
+                    userButtonTrigger: "focus:shadow-none"
+                  }
+                }}
+              />
+            </SignedIn>
+            <SignedOut>
+              <Button variant="ghost" size="icon" onClick={handleLoginClick}>
+                <User className="h-5 w-5 text-gray-300" />
+              </Button>
+            </SignedOut>
+            
             <CartDropdown />
           </div>
 
@@ -104,9 +122,27 @@ const Navbar = () => {
               <Link to="/deals" className="text-gray-300 hover:text-white py-2 transition-colors">
                 {translate("deals")}
               </Link>
-              <Link to="/account" className="text-gray-300 hover:text-white py-2 transition-colors">
-                {translate("myAccount")}
-              </Link>
+              
+              {/* Authentication for mobile */}
+              <SignedIn>
+                <div className="flex items-center gap-2 py-2">
+                  <UserButton 
+                    afterSignOutUrl="/"
+                    appearance={{
+                      elements: {
+                        userButtonAvatarBox: "w-8 h-8",
+                        userButtonTrigger: "focus:shadow-none"
+                      }
+                    }}
+                  />
+                  <span className="text-gray-300">{translate("myAccount")}</span>
+                </div>
+              </SignedIn>
+              <SignedOut>
+                <Link to="/login" className="text-gray-300 hover:text-white py-2 transition-colors">
+                  {translate("login")}
+                </Link>
+              </SignedOut>
             </nav>
           </div>
         )}
