@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { SignIn } from '@clerk/clerk-react';
+import { SignIn as ClerkSignIn } from '@clerk/clerk-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Login = () => {
@@ -13,7 +13,7 @@ const Login = () => {
           {translate('login')}
         </h2>
         <div className="flex justify-center">
-          <SignIn 
+          <ClerkSignIn 
             routing="path" 
             path="/login"
             signUpUrl="/signup"

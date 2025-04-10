@@ -14,7 +14,7 @@ import Laptops from "./pages/Laptops";
 import Components from "./pages/Components";
 import Deals from "./pages/Deals";
 import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
+import SignUpPage from "./pages/SignUp";
 
 const App = () => {
   const [queryClient] = useState(() => new QueryClient());
@@ -34,7 +34,7 @@ const App = () => {
               <Route path="/deals" element={<Deals />} />
               <Route path="/product/:id" element={<ProductDetail />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signup" element={<SignUpPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

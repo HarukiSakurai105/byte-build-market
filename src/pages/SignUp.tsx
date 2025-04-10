@@ -1,9 +1,9 @@
 
 import React from 'react';
-import { SignUp } from '@clerk/clerk-react';
+import { SignUp as ClerkSignUp } from '@clerk/clerk-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-const SignUp = () => {
+const SignUpPage = () => {
   const { translate } = useLanguage();
 
   return (
@@ -13,7 +13,7 @@ const SignUp = () => {
           {translate('signup')}
         </h2>
         <div className="flex justify-center">
-          <SignUp 
+          <ClerkSignUp 
             routing="path" 
             path="/signup"
             signInUrl="/login"
@@ -37,4 +37,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpPage;
