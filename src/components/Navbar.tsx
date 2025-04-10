@@ -2,7 +2,7 @@
 import { ShoppingCart, Menu, Search, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LanguageCurrencySelector from "./LanguageCurrencySelector";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -13,7 +13,14 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { translate } = useLanguage();
   const navigate = useNavigate();
+  const [clerkAvailable, setClerkAvailable] = useState(false);
   
+  useEffect(() => {
+    // Check if Clerk is properly configured
+    const key = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+    setClerkAvailable(key && key.startsWith('pk_') && key !== 'pk_test_placeholder');
+  }, []);
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -64,23 +71,31 @@ const Navbar = () => {
             </div>
             <LanguageCurrencySelector />
             
-            {/* Authentication UI */}
-            <SignedIn>
-              <UserButton 
-                afterSignOutUrl="/"
-                appearance={{
-                  elements: {
-                    userButtonAvatarBox: "w-9 h-9",
-                    userButtonTrigger: "focus:shadow-none"
-                  }
-                }}
-              />
-            </SignedIn>
-            <SignedOut>
+            {/* Authentication UI - conditionally rendered based on Clerk availability */}
+            {clerkAvailable ? (
+              <>
+                <SignedIn>
+                  <UserButton 
+                    afterSignOutUrl="/"
+                    appearance={{
+                      elements: {
+                        userButtonAvatarBox: "w-9 h-9",
+                        userButtonTrigger: "focus:shadow-none"
+                      }
+                    }}
+                  />
+                </SignedIn>
+                <SignedOut>
+                  <Button variant="ghost" size="icon" onClick={handleLoginClick}>
+                    <User className="h-5 w-5 text-gray-300" />
+                  </Button>
+                </SignedOut>
+              </>
+            ) : (
               <Button variant="ghost" size="icon" onClick={handleLoginClick}>
                 <User className="h-5 w-5 text-gray-300" />
               </Button>
-            </SignedOut>
+            )}
             
             <CartDropdown />
           </div>
@@ -123,26 +138,34 @@ const Navbar = () => {
                 {translate("deals")}
               </Link>
               
-              {/* Authentication for mobile */}
-              <SignedIn>
-                <div className="flex items-center gap-2 py-2">
-                  <UserButton 
-                    afterSignOutUrl="/"
-                    appearance={{
-                      elements: {
-                        userButtonAvatarBox: "w-8 h-8",
-                        userButtonTrigger: "focus:shadow-none"
-                      }
-                    }}
-                  />
-                  <span className="text-gray-300">{translate("myAccount")}</span>
-                </div>
-              </SignedIn>
-              <SignedOut>
+              {/* Authentication for mobile - conditionally rendered based on Clerk availability */}
+              {clerkAvailable ? (
+                <>
+                  <SignedIn>
+                    <div className="flex items-center gap-2 py-2">
+                      <UserButton 
+                        afterSignOutUrl="/"
+                        appearance={{
+                          elements: {
+                            userButtonAvatarBox: "w-8 h-8",
+                            userButtonTrigger: "focus:shadow-none"
+                          }
+                        }}
+                      />
+                      <span className="text-gray-300">{translate("myAccount")}</span>
+                    </div>
+                  </SignedIn>
+                  <SignedOut>
+                    <Link to="/login" className="text-gray-300 hover:text-white py-2 transition-colors">
+                      {translate("login")}
+                    </Link>
+                  </SignedOut>
+                </>
+              ) : (
                 <Link to="/login" className="text-gray-300 hover:text-white py-2 transition-colors">
                   {translate("login")}
                 </Link>
-              </SignedOut>
+              )}
             </nav>
           </div>
         )}

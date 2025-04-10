@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import GamingPCs from "./pages/GamingPCs";
@@ -18,6 +18,11 @@ import SignUpPage from "./pages/SignUp";
 
 const App = () => {
   const [queryClient] = useState(() => new QueryClient());
+  const [isClerkLoaded] = useState(() => {
+    // Check if the Clerk Provider is available by looking at the environment variable
+    const key = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+    return key && key.startsWith('pk_') && key !== 'pk_test_placeholder';
+  });
 
   return (
     <QueryClientProvider client={queryClient}>

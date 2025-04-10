@@ -14,12 +14,14 @@ if (!hasValidClerkKey) {
   console.warn("Missing valid Clerk Publishable Key. To enable authentication, please set the VITE_CLERK_PUBLISHABLE_KEY environment variable with a valid key from https://dashboard.clerk.com/. Authentication features will be limited until this is configured.");
 }
 
-// For development: if no valid key is provided, use a fake one that lets the app render
-// but authentication won't work correctly
-const developmentKey = 'pk_test_Y2xlcmsuY29tIGRldmVsb3BtZW50IGtleQ';
-
-createRoot(document.getElementById("root")!).render(
-  <ClerkProvider publishableKey={hasValidClerkKey ? PUBLISHABLE_KEY : developmentKey}>
-    <App />
-  </ClerkProvider>
-);
+// Create our app without ClerkProvider when no valid key exists
+if (!hasValidClerkKey) {
+  createRoot(document.getElementById("root")!).render(<App />);
+} else {
+  // Only use ClerkProvider when we have a valid key
+  createRoot(document.getElementById("root")!).render(
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      <App />
+    </ClerkProvider>
+  );
+}
