@@ -10,6 +10,9 @@ import NotFound from "./pages/NotFound";
 import GamingPCs from "./pages/GamingPCs";
 import ProductDetail from "./pages/ProductDetail";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import Laptops from "./pages/Laptops";
+import Components from "./pages/Components";
+import Deals from "./pages/Deals";
 
 const App = () => {
   const [queryClient] = useState(() => new QueryClient());
@@ -24,6 +27,9 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/category/gaming-pcs" element={<GamingPCs />} />
+              <Route path="/category/laptops" element={<Laptops />} />
+              <Route path="/category/components" element={<Components />} />
+              <Route path="/deals" element={<Deals />} />
               <Route path="/product/:id" element={<ProductDetail />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/useCart";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const CartDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { items, totalItems, totalPrice, updateQuantity, removeItem } = useCart();
+  const { translate, formatPrice } = useLanguage();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -48,7 +50,7 @@ const CartDropdown = () => {
         <div className="absolute right-0 mt-2 w-80 bg-card shadow-xl rounded-lg border border-gray-800 z-50 overflow-hidden">
           <div className="p-4 border-b border-gray-800">
             <div className="flex justify-between items-center">
-              <h3 className="font-semibold">Shopping Cart</h3>
+              <h3 className="font-semibold">{translate("shoppingCart")}</h3>
               <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={toggleDropdown}>
                 <X className="h-4 w-4" />
               </Button>
@@ -59,9 +61,9 @@ const CartDropdown = () => {
             {items.length === 0 ? (
               <div className="py-8 px-4 text-center">
                 <ShoppingBag className="mx-auto h-12 w-12 text-gray-400 mb-3" />
-                <p className="text-gray-400">Your cart is empty</p>
+                <p className="text-gray-400">{translate("emptyCart")}</p>
                 <Button variant="link" className="mt-2 text-tech-blue" onClick={toggleDropdown}>
-                  <Link to="/products">Continue Shopping</Link>
+                  <Link to="/products">{translate("continueShopping")}</Link>
                 </Button>
               </div>
             ) : (
@@ -97,14 +99,14 @@ const CartDropdown = () => {
                           </Button>
                         </div>
                         <div className="text-right">
-                          <div className="font-medium">${(item.price * item.quantity).toFixed(2)}</div>
+                          <div className="font-medium">{formatPrice(item.price * item.quantity)}</div>
                           <Button
                             variant="ghost"
                             size="sm"
                             className="h-6 px-2 text-xs text-red-500 hover:text-red-600"
                             onClick={() => removeItem(item.id)}
                           >
-                            Remove
+                            {translate("remove")}
                           </Button>
                         </div>
                       </div>
@@ -118,12 +120,12 @@ const CartDropdown = () => {
           {items.length > 0 && (
             <div className="p-4 border-t border-gray-800">
               <div className="flex justify-between mb-4">
-                <span>Subtotal</span>
-                <span className="font-semibold">${totalPrice().toFixed(2)}</span>
+                <span>{translate("subtotal")}</span>
+                <span className="font-semibold">{formatPrice(totalPrice())}</span>
               </div>
               <Button className="w-full bg-tech-blue hover:bg-tech-blue/90">
                 <Link to="/checkout" className="w-full" onClick={toggleDropdown}>
-                  Checkout
+                  {translate("checkout")}
                 </Link>
               </Button>
             </div>

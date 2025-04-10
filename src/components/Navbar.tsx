@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import LanguageCurrencySelector from "./LanguageCurrencySelector";
 import { useLanguage } from "@/contexts/LanguageContext";
+import CartDropdown from "./CartDropdown";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -59,12 +60,7 @@ const Navbar = () => {
             <Button variant="ghost" size="icon">
               <User className="h-5 w-5 text-gray-300" />
             </Button>
-            <Button variant="ghost" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5 text-gray-300" />
-              <span className="absolute -top-1 -right-1 bg-tech-red text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                3
-              </span>
-            </Button>
+            <CartDropdown />
           </div>
 
           {/* Mobile Menu Button */}
@@ -73,12 +69,7 @@ const Navbar = () => {
             <Button variant="ghost" size="icon" onClick={toggleMobileMenu}>
               <Menu className="h-6 w-6 text-gray-300" />
             </Button>
-            <Button variant="ghost" size="icon" className="relative ml-2">
-              <ShoppingCart className="h-5 w-5 text-gray-300" />
-              <span className="absolute -top-1 -right-1 bg-tech-red text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                3
-              </span>
-            </Button>
+            <CartDropdown />
           </div>
         </div>
 
