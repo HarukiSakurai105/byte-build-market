@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { 
   Accordion,
@@ -15,6 +16,7 @@ import { X, SlidersHorizontal } from "lucide-react";
 
 interface FilterProps {
   onFilterChange: (filters: any) => void;
+  onSortChange: (order: string) => void;
 }
 
 const ProductFilters = ({ onFilterChange }: FilterProps) => {

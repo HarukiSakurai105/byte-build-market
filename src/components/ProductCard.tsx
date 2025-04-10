@@ -11,6 +11,7 @@ export interface ProductCardProps {
   category: string;
   price: number;
   oldPrice?: number;
+  salePrice?: number;  // Add salePrice property
   rating: number;
   image: string;
   isNew?: boolean;
