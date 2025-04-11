@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { ClerkProvider } from '@clerk/clerk-react';
 import App from './App.tsx';
 import './index.css';
+import { AdminProvider } from './contexts/AdminContext.tsx';
 
 // Get Clerk publishable key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -16,12 +17,18 @@ if (!hasValidClerkKey) {
 
 // Create our app without ClerkProvider when no valid key exists
 if (!hasValidClerkKey) {
-  createRoot(document.getElementById("root")!).render(<App />);
+  createRoot(document.getElementById("root")!).render(
+    <AdminProvider>
+      <App />
+    </AdminProvider>
+  );
 } else {
   // Only use ClerkProvider when we have a valid key
   createRoot(document.getElementById("root")!).render(
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <App />
+      <AdminProvider>
+        <App />
+      </AdminProvider>
     </ClerkProvider>
   );
 }

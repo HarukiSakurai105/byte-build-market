@@ -16,6 +16,7 @@ import Deals from "./pages/Deals";
 import Login from "./pages/Login";
 import SignUpPage from "./pages/SignUp";
 import DatabaseSettings from "./pages/DatabaseSettings";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 const App = () => {
   const [queryClient] = useState(() => new QueryClient());
@@ -42,6 +43,7 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/database-settings" element={<DatabaseSettings />} />
+              <Route path="/admin/*" element={<AdminDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
