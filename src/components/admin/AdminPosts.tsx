@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Plus, Edit, Trash2, Save, X, Tag, Image } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -155,11 +156,11 @@ const AdminPosts = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-black">
       {showConfigForm && currentPost ? (
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Cấu hình sản phẩm: {currentPost.title}</h2>
+            <h2 className="text-xl font-bold text-black">Cấu hình sản phẩm: {currentPost.title}</h2>
             <Button variant="outline" onClick={handleCancelConfig}>
               <X className="h-4 w-4 mr-2" /> Đóng
             </Button>
@@ -173,7 +174,7 @@ const AdminPosts = () => {
       ) : (
         <>
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold">Quản lý bài viết</h1>
+            <h1 className="text-2xl font-bold text-black">Quản lý bài viết</h1>
             <Button onClick={() => setShowAddForm(!showAddForm)} className="bg-tech-blue hover:bg-blue-700">
               <Plus className="h-4 w-4 mr-2" /> Thêm bài viết
             </Button>
@@ -184,7 +185,7 @@ const AdminPosts = () => {
               <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="title" className="block text-sm font-medium text-black mb-1">
                       Tiêu đề
                     </label>
                     <Input
@@ -192,11 +193,11 @@ const AdminPosts = () => {
                       value={newPost.title}
                       onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
                       placeholder="Nhập tiêu đề bài viết"
-                      className="bg-white border-gray-300"
+                      className="bg-white border-gray-300 text-black"
                     />
                   </div>
                   <div>
-                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="content" className="block text-sm font-medium text-black mb-1">
                       Nội dung
                     </label>
                     <Textarea
@@ -205,11 +206,11 @@ const AdminPosts = () => {
                       onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
                       placeholder="Nhập nội dung bài viết"
                       rows={5}
-                      className="bg-white border-gray-300"
+                      className="bg-white border-gray-300 text-black"
                     />
                   </div>
                   <div className="flex justify-end space-x-2">
-                    <Button variant="outline" onClick={() => setShowAddForm(false)}>
+                    <Button variant="outline" className="text-black" onClick={() => setShowAddForm(false)}>
                       Huỷ
                     </Button>
                     <Button className="bg-tech-blue hover:bg-blue-700" onClick={handleAddPost}>
@@ -226,10 +227,10 @@ const AdminPosts = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-[50px]">ID</TableHead>
-                    <TableHead>Tiêu đề</TableHead>
-                    <TableHead className="w-[150px]">Ngày tạo</TableHead>
-                    <TableHead className="w-[180px] text-right">Thao tác</TableHead>
+                    <TableHead className="w-[50px] text-black">ID</TableHead>
+                    <TableHead className="text-black">Tiêu đề</TableHead>
+                    <TableHead className="w-[150px] text-black">Ngày tạo</TableHead>
+                    <TableHead className="w-[180px] text-right text-black">Thao tác</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -242,7 +243,7 @@ const AdminPosts = () => {
                   ) : (
                     posts.map((post) => (
                       <TableRow key={post.id}>
-                        <TableCell>{post.id}</TableCell>
+                        <TableCell className="text-black">{post.id}</TableCell>
                         <TableCell>
                           <div>
                             {editingPost?.id === post.id ? (
@@ -250,10 +251,10 @@ const AdminPosts = () => {
                                 type="text"
                                 value={editingPost.title}
                                 onChange={(e) => setEditingPost({ ...editingPost, title: e.target.value })}
-                                className="w-full border rounded px-2 py-1"
+                                className="w-full border rounded px-2 py-1 text-black"
                               />
                             ) : (
-                              <div className="font-medium">{post.title}</div>
+                              <div className="font-medium text-black">{post.title}</div>
                             )}
                             
                             {post.productConfig && (
@@ -273,7 +274,7 @@ const AdminPosts = () => {
                             )}
                           </div>
                         </TableCell>
-                        <TableCell>{post.date}</TableCell>
+                        <TableCell className="text-black">{post.date}</TableCell>
                         <TableCell className="text-right">
                           {editingPost?.id === post.id ? (
                             <div className="flex justify-end space-x-1">
@@ -338,16 +339,16 @@ const AdminPosts = () => {
           {editingPost && (
             <Card className="bg-white border border-gray-200 mt-4">
               <CardContent className="pt-6">
-                <h3 className="text-lg font-medium mb-3">Chỉnh sửa nội dung</h3>
+                <h3 className="text-lg font-medium mb-3 text-black">Chỉnh sửa nội dung</h3>
                 <div className="space-y-4">
                   <textarea
                     value={editingPost.content}
                     onChange={(e) => setEditingPost({ ...editingPost, content: e.target.value })}
                     rows={6}
-                    className="w-full border rounded p-2"
+                    className="w-full border rounded p-2 text-black"
                   />
                   <div className="flex justify-end space-x-2">
-                    <Button variant="outline" onClick={handleCancelEdit}>
+                    <Button variant="outline" className="text-black" onClick={handleCancelEdit}>
                       Huỷ
                     </Button>
                     <Button className="bg-tech-blue hover:bg-blue-700" onClick={handleSaveEdit}>
@@ -365,3 +366,4 @@ const AdminPosts = () => {
 };
 
 export default AdminPosts;
+
