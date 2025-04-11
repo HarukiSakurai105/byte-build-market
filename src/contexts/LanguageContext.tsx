@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 // Define types for language and currency
@@ -70,6 +69,19 @@ const translations: Translations = {
     passwordsDoNotMatch: "Passwords do not match",
     loginSuccessful: "Login successful!",
     signupSuccessful: "Sign up successful!",
+    connecting: "Connecting to server...",
+    connectionSuccess: "Connected to database successfully",
+    connectionFailed: "Failed to connect to database",
+    serverSettings: "Server Settings",
+    serverAddress: "Server Address",
+    databaseName: "Database Name",
+    username: "Username",
+    connectToServer: "Connect to Server",
+    databaseConnection: "Database Connection",
+    disconnect: "Disconnect",
+    serverAddressPlaceholder: "Enter server address",
+    databaseNamePlaceholder: "Enter database name",
+    usernamePlaceholder: "Enter username",
   },
   vi: {
     login: 'Đăng nhập',
@@ -114,6 +126,19 @@ const translations: Translations = {
     passwordsDoNotMatch: "Mật khẩu không khớp",
     loginSuccessful: "Đăng nhập thành công!",
     signupSuccessful: "Đăng ký thành công!",
+    connecting: "Đang kết nối đến máy chủ...",
+    connectionSuccess: "Kết nối đến cơ sở dữ liệu thành công",
+    connectionFailed: "Kết nối đến cơ sở dữ liệu thất bại",
+    serverSettings: "Cài đặt máy chủ",
+    serverAddress: "Địa chỉ máy chủ",
+    databaseName: "Tên cơ sở dữ liệu",
+    username: "Tên đăng nhập",
+    connectToServer: "Kết nối đến máy chủ",
+    databaseConnection: "Kết nối cơ sở dữ liệu",
+    disconnect: "Ngắt kết nối",
+    serverAddressPlaceholder: "Nhập địa chỉ máy chủ",
+    databaseNamePlaceholder: "Nhập tên cơ sở dữ liệu",
+    usernamePlaceholder: "Nhập tên đăng nhập",
   },
 };
 

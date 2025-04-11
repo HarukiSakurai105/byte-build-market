@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { SignIn as ClerkSignIn } from '@clerk/clerk-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -7,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, Database } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const Login = () => {
@@ -106,10 +105,17 @@ const Login = () => {
               {translate('login')}
             </Button>
             
-            <div className="text-center text-gray-400 text-sm">
-              {translate('noAccount')}?{' '}
-              <Link to="/signup" className="text-tech-blue hover:text-blue-400">
-                {translate('signUp')}
+            <div className="flex justify-between items-center mt-4">
+              <div className="text-center text-gray-400 text-sm">
+                {translate('noAccount')}{' '}
+                <Link to="/signup" className="text-tech-blue hover:text-blue-400">
+                  {translate('signUp')}
+                </Link>
+              </div>
+              
+              <Link to="/database-settings" className="flex items-center text-tech-blue hover:text-blue-400 text-sm">
+                <Database className="h-4 w-4 mr-1" />
+                {translate('serverSettings')}
               </Link>
             </div>
           </form>
@@ -144,6 +150,13 @@ const Login = () => {
               }
             }}
           />
+        </div>
+        
+        <div className="flex justify-center mt-4">
+          <Link to="/database-settings" className="flex items-center text-tech-blue hover:text-blue-400 text-sm">
+            <Database className="h-4 w-4 mr-1" />
+            {translate('serverSettings')}
+          </Link>
         </div>
       </div>
     </div>
