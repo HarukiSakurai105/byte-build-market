@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -18,14 +17,11 @@ const GamingPCs = () => {
   const handleFilterChange = (filters: any) => {
     let filtered = [...products];
     
-    // Apply price filter
     if (filters.price) {
       filtered = filtered.filter(product => 
         product.price >= filters.price[0] && product.price <= filters.price[1]
       );
     }
-    
-    // Apply other filters if implemented
     
     setFilteredProducts(filtered);
     applySorting(filtered, sortOption);
@@ -45,7 +41,6 @@ const GamingPCs = () => {
         sorted.sort((a, b) => b.rating - a.rating);
         break;
       default:
-        // featured - no specific sorting
         break;
     }
     
@@ -58,12 +53,11 @@ const GamingPCs = () => {
   };
 
   useEffect(() => {
-    // Apply initial sort
     applySorting(products, sortOption);
   }, [products]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col text-white">
       <Navbar />
       
       <main className="flex-grow pt-6 pb-12">
@@ -71,28 +65,26 @@ const GamingPCs = () => {
           <ProductHeader 
             title="Gaming PCs" 
             description="High-performance custom gaming computers built for ultimate gaming experience" 
+            className="text-white"
           />
           
-          {/* Main Content */}
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Filters Sidebar */}
             <ProductFilters 
               onFilterChange={handleFilterChange}
               onSortChange={handleSortChange}
+              className="text-white"
             />
             
-            {/* Products Grid */}
             <div className="flex-1">
-              {/* Sort Controls */}
-              <div className="flex justify-between items-center mb-6">
+              <div className="flex justify-between items-center mb-6 text-white">
                 <ProductsCount count={filteredProducts.length} />
                 <SortDropdown 
                   onSortChange={handleSortChange}
                   currentSort={sortOption}
+                  className="text-white"
                 />
               </div>
               
-              {/* Products */}
               <ProductGrid products={filteredProducts} />
             </div>
           </div>
