@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Plus, Edit, Trash2, Save, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,7 +6,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useToast } from '@/hooks/use-toast';
 
-// Định nghĩa kiểu dữ liệu cho mã giảm giá
 interface Discount {
   id: number;
   code: string;
@@ -31,7 +29,6 @@ const AdminDiscounts = () => {
     isActive: true,
   });
 
-  // Xử lý thêm mã giảm giá mới
   const handleAddDiscount = () => {
     if (!newDiscount.code || !newDiscount.validUntil || newDiscount.percentage <= 0) {
       toast({
@@ -63,7 +60,6 @@ const AdminDiscounts = () => {
     });
   };
 
-  // Xử lý xoá mã giảm giá
   const handleDeleteDiscount = (id: number) => {
     setDiscounts(discounts.filter(discount => discount.id !== id));
     toast({
@@ -72,12 +68,10 @@ const AdminDiscounts = () => {
     });
   };
 
-  // Bắt đầu chỉnh sửa mã giảm giá
   const handleStartEdit = (discount: Discount) => {
     setEditingDiscount({ ...discount });
   };
 
-  // Lưu mã giảm giá sau khi chỉnh sửa
   const handleSaveEdit = () => {
     if (!editingDiscount) return;
 
@@ -101,12 +95,10 @@ const AdminDiscounts = () => {
     });
   };
 
-  // Huỷ chỉnh sửa
   const handleCancelEdit = () => {
     setEditingDiscount(null);
   };
 
-  // Chuyển đổi trạng thái hoạt động của mã giảm giá
   const toggleDiscountActive = (id: number) => {
     setDiscounts(discounts.map(discount => 
       discount.id === id ? { ...discount, isActive: !discount.isActive } : discount
@@ -119,9 +111,9 @@ const AdminDiscounts = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-black">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Quản lý mã giảm giá</h1>
+        <h1 className="text-2xl font-bold text-black">Quản lý mã giảm giá</h1>
         <Button onClick={() => setShowAddForm(!showAddForm)} className="bg-tech-blue hover:bg-blue-700">
           <Plus className="h-4 w-4 mr-2" /> Thêm mã giảm giá
         </Button>
@@ -130,9 +122,9 @@ const AdminDiscounts = () => {
       {showAddForm && (
         <Card className="bg-white border border-gray-200">
           <CardContent className="pt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
               <div>
-                <label htmlFor="code" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="code" className="block text-sm font-medium text-black mb-1">
                   Mã giảm giá
                 </label>
                 <Input
@@ -140,11 +132,11 @@ const AdminDiscounts = () => {
                   value={newDiscount.code}
                   onChange={(e) => setNewDiscount({ ...newDiscount, code: e.target.value.toUpperCase() })}
                   placeholder="Ví dụ: SUMMER23"
-                  className="bg-white border-gray-300"
+                  className="bg-white border-gray-300 text-black"
                 />
               </div>
               <div>
-                <label htmlFor="percentage" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="percentage" className="block text-sm font-medium text-black mb-1">
                   Phần trăm giảm giá (%)
                 </label>
                 <Input
@@ -154,11 +146,11 @@ const AdminDiscounts = () => {
                   onChange={(e) => setNewDiscount({ ...newDiscount, percentage: parseInt(e.target.value) || 0 })}
                   min="0"
                   max="100"
-                  className="bg-white border-gray-300"
+                  className="bg-white border-gray-300 text-black"
                 />
               </div>
               <div>
-                <label htmlFor="validUntil" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="validUntil" className="block text-sm font-medium text-black mb-1">
                   Có hiệu lực đến
                 </label>
                 <Input
@@ -166,7 +158,7 @@ const AdminDiscounts = () => {
                   type="date"
                   value={newDiscount.validUntil}
                   onChange={(e) => setNewDiscount({ ...newDiscount, validUntil: e.target.value })}
-                  className="bg-white border-gray-300"
+                  className="bg-white border-gray-300 text-black"
                 />
               </div>
               <div className="flex items-end">
@@ -187,37 +179,37 @@ const AdminDiscounts = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[50px]">ID</TableHead>
-                <TableHead>Mã giảm giá</TableHead>
-                <TableHead>Giảm giá (%)</TableHead>
-                <TableHead>Có hiệu lực đến</TableHead>
-                <TableHead className="w-[100px]">Trạng thái</TableHead>
-                <TableHead className="w-[120px] text-right">Thao tác</TableHead>
+                <TableHead className="w-[50px] text-black">ID</TableHead>
+                <TableHead className="text-black">Mã giảm giá</TableHead>
+                <TableHead className="text-black">Giảm giá (%)</TableHead>
+                <TableHead className="text-black">Có hiệu lực đến</TableHead>
+                <TableHead className="w-[100px] text-black">Trạng thái</TableHead>
+                <TableHead className="w-[120px] text-right text-black">Thao tác</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {discounts.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-6 text-gray-500">
+                  <TableCell colSpan={6} className="text-center py-6 text-black">
                     Chưa có mã giảm giá nào
                   </TableCell>
                 </TableRow>
               ) : (
                 discounts.map((discount) => (
-                  <TableRow key={discount.id}>
-                    <TableCell>{discount.id}</TableCell>
-                    <TableCell>
+                  <TableRow key={discount.id} className="text-black">
+                    <TableCell className="text-black">{discount.id}</TableCell>
+                    <TableCell className="text-black">
                       {editingDiscount?.id === discount.id ? (
                         <Input
                           value={editingDiscount.code}
                           onChange={(e) => setEditingDiscount({ ...editingDiscount, code: e.target.value.toUpperCase() })}
-                          className="bg-white border-gray-300"
+                          className="bg-white border-gray-300 text-black"
                         />
                       ) : (
-                        <code className="bg-gray-100 px-2 py-1 rounded">{discount.code}</code>
+                        <code className="bg-gray-100 px-2 py-1 rounded text-black">{discount.code}</code>
                       )}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="text-black">
                       {editingDiscount?.id === discount.id ? (
                         <Input
                           type="number"
@@ -225,25 +217,25 @@ const AdminDiscounts = () => {
                           onChange={(e) => setEditingDiscount({ ...editingDiscount, percentage: parseInt(e.target.value) || 0 })}
                           min="0"
                           max="100"
-                          className="bg-white border-gray-300 w-20"
+                          className="bg-white border-gray-300 w-20 text-black"
                         />
                       ) : (
                         `${discount.percentage}%`
                       )}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="text-black">
                       {editingDiscount?.id === discount.id ? (
                         <Input
                           type="date"
                           value={editingDiscount.validUntil}
                           onChange={(e) => setEditingDiscount({ ...editingDiscount, validUntil: e.target.value })}
-                          className="bg-white border-gray-300"
+                          className="bg-white border-gray-300 text-black"
                         />
                       ) : (
                         discount.validUntil
                       )}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="text-black">
                       <Button
                         variant={discount.isActive ? "default" : "outline"}
                         size="sm"
