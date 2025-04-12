@@ -1,11 +1,12 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 220 20% 12%;
-    --foreground: 0 0% 0%;
+    --background: 220 20% 12%; /* Dark background */
+    --foreground: 0 0% 98%; /* Almost white text */
     --card: 240 10% 10%;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 10%;
@@ -15,23 +16,14 @@
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted-foreground: 215 20.2% 75.1%; /* Lighter muted text */
     --accent: 271 81% 56%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-    --radius: 0.5rem;
-    --sidebar-background: 240 10% 8%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 271 81% 56%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 217.2 32.6% 22.5%; /* Slightly lighter border */
+    --input: 217.2 32.6% 22.5%;
+    --ring: 224.3 76.3% 58%; /* Brighter ring color */
   }
 }
 
@@ -49,7 +41,7 @@
   }
   
   .card-hover {
-    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-tech-blue/20;
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-tech-blue/40;
   }
   
   .product-image {
