@@ -8,9 +8,10 @@ export type SortOption = "featured" | "price-low" | "price-high" | "rating";
 interface SortDropdownProps {
   onSortChange: (option: SortOption) => void;
   currentSort: SortOption;
+  className?: string;
 }
 
-const SortDropdown = ({ onSortChange, currentSort }: SortDropdownProps) => {
+const SortDropdown = ({ onSortChange, currentSort, className = "" }: SortDropdownProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
   const getSortLabel = (option: SortOption) => {
@@ -30,7 +31,7 @@ const SortDropdown = ({ onSortChange, currentSort }: SortDropdownProps) => {
         className="flex items-center justify-between min-w-40 border-gray-700"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
-        <span>{getSortLabel(currentSort)}</span>
+        <span className={className}>{getSortLabel(currentSort)}</span>
         {isDropdownOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
       </Button>
       
@@ -41,7 +42,7 @@ const SortDropdown = ({ onSortChange, currentSort }: SortDropdownProps) => {
               <button
                 key={option}
                 className={`block px-4 py-2 text-sm w-full text-left hover:bg-tech-blue/10 ${
-                  currentSort === option ? "bg-tech-blue/20 text-tech-blue" : ""
+                  currentSort === option ? "bg-tech-blue/20 text-tech-blue" : className
                 }`}
                 onClick={() => {
                   onSortChange(option);
