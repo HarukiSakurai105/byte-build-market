@@ -5,9 +5,11 @@ export interface CartItem {
   id: number;
   name: string;
   price: number;
+  basePrice: number;
   image: string;
   quantity: number;
   selectedOptions?: Record<string, string>;
+  optionPrices?: Record<string, number>;
 }
 
 interface CartStore {

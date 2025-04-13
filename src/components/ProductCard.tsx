@@ -57,13 +57,19 @@ const ProductCard = ({
     setIsModalOpen(false);
   };
 
-  const handleAddItemAndCloseModal = (selectedOptions?: Record<string, string>) => {
+  const handleAddItemAndCloseModal = (
+    selectedOptions?: Record<string, string>, 
+    optionPrices?: Record<string, number>,
+    adjustedPrice?: number
+  ) => {
     addItem({
       id,
       name,
-      price: salePrice || price,
+      price: adjustedPrice || salePrice || price,
+      basePrice: salePrice || price,
       image,
-      selectedOptions
+      selectedOptions,
+      optionPrices
     });
     
     toast({

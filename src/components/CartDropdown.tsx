@@ -84,6 +84,11 @@ const CartDropdown = () => {
                             .map(([key, value]) => (
                               <div key={key} className="capitalize">
                                 {key}: <span className="text-gray-300">{value}</span>
+                                {item.optionPrices && item.optionPrices[key] > 0 && (
+                                  <span className="text-tech-red ml-1">
+                                    (+{formatPrice(item.optionPrices[key])})
+                                  </span>
+                                )}
                               </div>
                             ))}
                         </div>
