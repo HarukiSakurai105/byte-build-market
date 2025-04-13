@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, CreditCard, Wallet, CheckCircle, Banknote, X } from "lucide-react";
@@ -9,6 +10,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CreditCardForm, { CreditCardFormData } from "@/components/CreditCardForm";
+import SearchBar from "@/components/SearchBar";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -18,6 +21,8 @@ const CheckoutPage = () => {
   const [paymentMethod, setPaymentMethod] = useState<string>("cash");
   const [isCheckoutComplete, setIsCheckoutComplete] = useState(false);
   const [isOrderConfirmed, setIsOrderConfirmed] = useState(false);
+  const [showCreditCardForm, setShowCreditCardForm] = useState(false);
+  const [creditCardInfo, setCreditCardInfo] = useState<CreditCardFormData | null>(null);
 
   if (items.length === 0) {
     return (
@@ -37,9 +42,27 @@ const CheckoutPage = () => {
 
   const handlePaymentMethodChange = (value: string) => {
     setPaymentMethod(value);
+    if (value === "credit") {
+      setShowCreditCardForm(true);
+    } else {
+      setShowCreditCardForm(false);
+    }
+  };
+
+  const handleCreditCardSubmit = (data: CreditCardFormData) => {
+    setCreditCardInfo(data);
+    setShowCreditCardForm(false);
+    toast({
+      title: translate("cardAdded"),
+      description: translate("cardAddedSuccessfully"),
+    });
   };
 
   const handleCheckout = () => {
+    if (paymentMethod === "credit" && !creditCardInfo) {
+      setShowCreditCardForm(true);
+      return;
+    }
     setIsCheckoutComplete(true);
   };
 
@@ -65,14 +88,18 @@ const CheckoutPage = () => {
       <Navbar />
       
       <div className="container mx-auto px-4 py-8 flex-grow">
-        <Button
-          variant="ghost"
-          className="mb-8 flex items-center text-gray-400 hover:text-white"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          {translate("backToCart")}
-        </Button>
+        <div className="flex flex-col md:flex-row justify-between items-start mb-8 gap-4">
+          <Button
+            variant="ghost"
+            className="flex items-center text-gray-400 hover:text-white"
+            onClick={() => navigate(-1)}
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            {translate("backToCart")}
+          </Button>
+          
+          <SearchBar />
+        </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
@@ -181,6 +208,43 @@ const CheckoutPage = () => {
                 </RadioGroup>
               </div>
               
+              {paymentMethod === "credit" && (
+                <div className="mx-6 my-4">
+                  {creditCardInfo ? (
+                    <div className="p-4 bg-gray-900 rounded-lg">
+                      <div className="flex justify-between items-center mb-2">
+                        <h3 className="font-medium">{translate("savedCard")}</h3>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => setShowCreditCardForm(true)}
+                          className="text-xs"
+                        >
+                          {translate("change")}
+                        </Button>
+                      </div>
+                      <div className="space-y-1 text-sm">
+                        <p className="flex items-center">
+                          <CreditCard className="h-4 w-4 mr-2 text-tech-blue" />
+                          <span>•••• •••• •••• {creditCardInfo.cardNumber.slice(-4)}</span>
+                        </p>
+                        <p>{creditCardInfo.cardHolder}</p>
+                        <p className="text-gray-400">{creditCardInfo.bankName}</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setShowCreditCardForm(true)}
+                      className="w-full"
+                    >
+                      <CreditCard className="mr-2 h-4 w-4" />
+                      {translate("addCreditCard")}
+                    </Button>
+                  )}
+                </div>
+              )}
+              
               <div className="p-6">
                 <Button 
                   className="w-full bg-tech-blue hover:bg-tech-blue/90" 
@@ -194,6 +258,15 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
+      
+      <Dialog open={showCreditCardForm} onOpenChange={setShowCreditCardForm}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>{translate("addCreditCard")}</DialogTitle>
+          </DialogHeader>
+          <CreditCardForm onSubmit={handleCreditCardSubmit} />
+        </DialogContent>
+      </Dialog>
       
       <Dialog open={isCheckoutComplete} onOpenChange={setIsCheckoutComplete}>
         <DialogContent className="sm:max-w-md">
@@ -220,6 +293,16 @@ const CheckoutPage = () => {
                 </div>
               </div>
             </div>
+            
+            {paymentMethod === "credit" && creditCardInfo && (
+              <div className="p-4 rounded-lg bg-gray-900">
+                <div className="space-y-1 text-sm">
+                  <p><span className="text-gray-400">{translate("cardNumber")}:</span> •••• •••• •••• {creditCardInfo.cardNumber.slice(-4)}</p>
+                  <p><span className="text-gray-400">{translate("cardHolder")}:</span> {creditCardInfo.cardHolder}</p>
+                  <p><span className="text-gray-400">{translate("bankName")}:</span> {creditCardInfo.bankName}</p>
+                </div>
+              </div>
+            )}
             
             {paymentMethod === "bank" && (
               <div className="p-4 rounded-lg bg-gray-900">
