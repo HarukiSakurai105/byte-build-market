@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -22,13 +21,11 @@ const ProductDetail = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Fetch product details
     if (id) {
       const productData = getProductById(Number(id));
       if (productData) {
         setProduct(productData);
         
-        // Get related products (from same category)
         const related = Array.from({ length: 4 }, () => {
           const randomId = Math.floor(Math.random() * 12) + 1;
           return getProductById(randomId);
@@ -46,6 +43,7 @@ const ProductDetail = () => {
         id: product.id,
         name: product.name,
         price: product.price,
+        basePrice: product.price,
         image: product.image,
       });
       
@@ -64,7 +62,6 @@ const ProductDetail = () => {
     setQuantity(q => (q > 1 ? q - 1 : 1));
   };
 
-  // Mock product specifications
   const specifications = [
     { name: "Processor", value: "Intel Core i9-13900K / AMD Ryzen 9 7950X" },
     { name: "Memory", value: "32GB DDR5 5600MHz" },
@@ -76,7 +73,6 @@ const ProductDetail = () => {
     { name: "Warranty", value: "3 Years" },
   ];
 
-  // Multiple product images (using the same image for demonstration)
   const productImages = product 
     ? [product.image, product.image, product.image, product.image] 
     : [];
@@ -118,7 +114,6 @@ const ProductDetail = () => {
       <Navbar />
       
       <main className="flex-grow container mx-auto px-4 py-6 md:py-12">
-        {/* Breadcrumb */}
         <div className="mb-8">
           <Button variant="ghost" asChild>
             <Link to="/category/gaming-pcs" className="flex items-center text-gray-400 hover:text-white">
@@ -128,9 +123,7 @@ const ProductDetail = () => {
           </Button>
         </div>
         
-        {/* Product Overview */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {/* Product Images */}
           <div className="space-y-4">
             <div className="aspect-square rounded-lg overflow-hidden border border-gray-800">
               <img 
@@ -161,7 +154,6 @@ const ProductDetail = () => {
             </div>
           </div>
           
-          {/* Product Info */}
           <div>
             <div className="mb-2 flex items-center">
               <span className="text-sm bg-tech-blue/20 text-tech-blue px-3 py-1 rounded-full">
@@ -284,7 +276,6 @@ const ProductDetail = () => {
           </div>
         </div>
         
-        {/* Product Details Tabs */}
         <Tabs defaultValue="specifications" className="mb-12">
           <TabsList className="border-b border-gray-800 bg-transparent w-full justify-start">
             <TabsTrigger value="specifications" className="data-[state=active]:border-tech-blue data-[state=active]:text-tech-blue border-b-2 border-transparent rounded-none">
@@ -335,7 +326,6 @@ const ProductDetail = () => {
           </TabsContent>
         </Tabs>
         
-        {/* Related Products */}
         <div>
           <h2 className="text-2xl font-bold mb-6">You Might Also Like</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
