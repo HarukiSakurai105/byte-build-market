@@ -15,6 +15,7 @@ import SignUp from "./pages/SignUp";
 import Components from "./pages/Components";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import DatabaseSettings from "./pages/DatabaseSettings";
+import Checkout from "./pages/Checkout";
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/components" element={<Components />} />
             <Route path="/admin/*" element={<AdminDashboard />} />
             <Route path="/database-settings" element={<DatabaseSettings />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Toaster />
