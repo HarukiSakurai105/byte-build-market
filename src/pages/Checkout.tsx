@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, CreditCard, Wallet, CheckCircle, Bank, X } from "lucide-react";
+import { ArrowLeft, CreditCard, Wallet, CheckCircle, Banknote, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -48,17 +47,14 @@ const CheckoutPage = () => {
     setIsCheckoutComplete(false);
     setIsOrderConfirmed(true);
     
-    // Clear the cart
     clearCart();
     
-    // Show success toast
     toast({
       title: translate("orderPlaced"),
       description: translate("orderConfirmation"),
       duration: 5000,
     });
     
-    // Redirect to home after a delay
     setTimeout(() => {
       navigate("/");
     }, 3000);
@@ -79,7 +75,6 @@ const CheckoutPage = () => {
         </Button>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Order summary */}
           <div className="lg:col-span-2">
             <h1 className="text-2xl font-bold mb-6">{translate("checkoutTitle")}</h1>
             
@@ -145,7 +140,6 @@ const CheckoutPage = () => {
             </div>
           </div>
           
-          {/* Payment details */}
           <div>
             <div className="bg-card rounded-lg border border-gray-800 overflow-hidden">
               <div className="p-6 border-b border-gray-800">
@@ -166,7 +160,7 @@ const CheckoutPage = () => {
                   <div className="flex items-center space-x-2 rounded-lg border border-gray-800 p-4 cursor-pointer hover:bg-gray-900 transition-colors">
                     <RadioGroupItem value="bank" id="bank" />
                     <label htmlFor="bank" className="flex items-center gap-3 flex-1 cursor-pointer">
-                      <Bank className="h-5 w-5 text-gray-400" />
+                      <Banknote className="h-5 w-5 text-gray-400" />
                       <div>
                         <div className="font-medium">{translate("bankTransfer")}</div>
                         <div className="text-sm text-gray-400">{translate("payViaTransfer")}</div>
@@ -210,7 +204,7 @@ const CheckoutPage = () => {
           <div className="space-y-4 py-4">
             <div className="flex items-center gap-4 p-4 rounded-lg bg-gray-900">
               {paymentMethod === "cash" && <Wallet className="h-5 w-5 text-tech-blue" />}
-              {paymentMethod === "bank" && <Bank className="h-5 w-5 text-tech-blue" />}
+              {paymentMethod === "bank" && <Banknote className="h-5 w-5 text-tech-blue" />}
               {paymentMethod === "credit" && <CreditCard className="h-5 w-5 text-tech-blue" />}
               
               <div>
