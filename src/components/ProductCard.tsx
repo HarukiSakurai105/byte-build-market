@@ -15,11 +15,19 @@ export interface ProductCardProps {
   category: string;
   price: number;
   oldPrice?: number;
-  salePrice?: number;  // Add salePrice property
+  salePrice?: number;
   rating: number;
   image: string;
   isNew?: boolean;
   isFeatured?: boolean;
+  specs?: {
+    processor?: string;
+    memory?: string[];
+    storage?: string[];
+    graphics?: string;
+    display?: string;
+    [key: string]: string | string[] | undefined;
+  };
 }
 
 const ProductCard = ({ 
@@ -28,10 +36,12 @@ const ProductCard = ({
   category, 
   price, 
   oldPrice, 
+  salePrice,
   rating, 
   image, 
   isNew = false,
-  isFeatured = false
+  isFeatured = false,
+  specs
 }: ProductCardProps) => {
   const { formatPrice, translate } = useLanguage();
   const { addItem } = useCart();
@@ -47,12 +57,13 @@ const ProductCard = ({
     setIsModalOpen(false);
   };
 
-  const handleAddItemAndCloseModal = () => {
+  const handleAddItemAndCloseModal = (selectedOptions?: Record<string, string>) => {
     addItem({
       id,
       name,
-      price,
+      price: salePrice || price,
       image,
+      selectedOptions
     });
     
     toast({
@@ -62,6 +73,9 @@ const ProductCard = ({
     
     setIsModalOpen(false);
   };
+  
+  // Use salePrice or price
+  const displayPrice = salePrice || price;
   
   return (
     <>
@@ -77,7 +91,7 @@ const ProductCard = ({
               {translate("new")}
             </Badge>
           )}
-          {oldPrice && (
+          {(oldPrice || salePrice) && (
             <Badge className="absolute top-2 right-2 bg-tech-red text-white">
               {translate("sale")}
             </Badge>
@@ -109,11 +123,11 @@ const ProductCard = ({
             <div>
               {oldPrice ? (
                 <div className="flex items-center">
-                  <span className="font-bold text-xl mr-2">{formatPrice(price)}</span>
+                  <span className="font-bold text-xl mr-2">{formatPrice(displayPrice)}</span>
                   <span className="text-gray-400 line-through text-sm">{formatPrice(oldPrice)}</span>
                 </div>
               ) : (
-                <span className="font-bold text-xl">{formatPrice(price)}</span>
+                <span className="font-bold text-xl">{formatPrice(displayPrice)}</span>
               )}
             </div>
             
@@ -126,9 +140,16 @@ const ProductCard = ({
       </div>
 
       <ProductAddedModal 
-        product={{ id, name, price, image }}
+        product={{ 
+          id, 
+          name, 
+          price: displayPrice, 
+          image,
+          specs 
+        }}
         isOpen={isModalOpen}
         onClose={handleModalClose}
+        onAddToCart={handleAddItemAndCloseModal}
       />
     </>
   );

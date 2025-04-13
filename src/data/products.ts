@@ -1,4 +1,3 @@
-
 import { ProductCardProps } from "../components/ProductCard";
 
 export const products: ProductCardProps[] = [
@@ -10,7 +9,13 @@ export const products: ProductCardProps[] = [
     rating: 4.8,
     image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
     isNew: true,
-    isFeatured: true
+    isFeatured: true,
+    specs: {
+      processor: "Intel Core i9-13900K",
+      memory: ["16GB DDR5", "32GB DDR5", "64GB DDR5"],
+      storage: ["512GB NVMe SSD", "1TB NVMe SSD", "2TB NVMe SSD"],
+      graphics: "NVIDIA RTX 4070"
+    }
   },
   {
     id: 2,
@@ -20,7 +25,14 @@ export const products: ProductCardProps[] = [
     oldPrice: 1999.99,
     rating: 4.6,
     image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-    isFeatured: true
+    isFeatured: true,
+    specs: {
+      processor: "AMD Ryzen 9 7950X",
+      memory: ["8GB DDR5", "16GB DDR5", "32GB DDR5"],
+      storage: ["256GB NVMe SSD", "512GB NVMe SSD", "1TB NVMe SSD"],
+      graphics: "AMD Radeon Graphics",
+      display: "16-inch Retina Display"
+    }
   },
   {
     id: 3,
@@ -29,7 +41,13 @@ export const products: ProductCardProps[] = [
     price: 1599.99,
     rating: 4.7,
     image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-    isFeatured: true
+    isFeatured: true,
+    specs: {
+      processor: "Intel Core i7-13700K",
+      memory: ["16GB DDR4", "32GB DDR4"],
+      storage: ["1TB NVMe SSD", "2TB NVMe SSD"],
+      graphics: "NVIDIA RTX 4060"
+    }
   },
   {
     id: 4,
@@ -38,7 +56,13 @@ export const products: ProductCardProps[] = [
     price: 3299.99,
     rating: 4.9,
     image: "https://images.unsplash.com/photo-1547082299-de196ea013d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-    isNew: true
+    isNew: true,
+    specs: {
+      processor: "AMD Threadripper PRO 5995WX",
+      memory: ["64GB DDR5", "128GB DDR5"],
+      storage: ["2TB NVMe SSD", "4TB NVMe SSD"],
+      graphics: "NVIDIA RTX A6000"
+    }
   },
   {
     id: 5,
@@ -47,7 +71,13 @@ export const products: ProductCardProps[] = [
     price: 2999.99,
     rating: 4.8,
     image: "https://images.unsplash.com/photo-1625842268584-8f3296236761?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-    isFeatured: true
+    isFeatured: true,
+    specs: {
+      processor: "Intel Core i9-13900KS",
+      memory: ["32GB DDR5", "64GB DDR5"],
+      storage: ["2TB NVMe SSD", "4TB NVMe SSD"],
+      graphics: "NVIDIA RTX 4080"
+    }
   },
   {
     id: 6,
@@ -75,7 +105,6 @@ export const products: ProductCardProps[] = [
     image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
     isNew: true
   },
-  // Gaming PCs specific to the gaming-pcs category
   {
     id: 9,
     name: "Titan X Gaming PC RTX 4090",
@@ -83,7 +112,13 @@ export const products: ProductCardProps[] = [
     price: 3999.99,
     rating: 4.9,
     image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-    isNew: true
+    isNew: true,
+    specs: {
+      processor: "Intel Core i9-13900K",
+      memory: ["16GB DDR5", "32GB DDR5", "64GB DDR5"],
+      storage: ["512GB NVMe SSD", "1TB NVMe SSD", "2TB NVMe SSD"],
+      graphics: "NVIDIA RTX 4090"
+    }
   },
   {
     id: 10,
@@ -91,7 +126,13 @@ export const products: ProductCardProps[] = [
     category: "Gaming PC",
     price: 2699.99,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+    image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+    specs: {
+      processor: "Intel Core i7-13700K",
+      memory: ["16GB DDR4", "32GB DDR4"],
+      storage: ["1TB NVMe SSD", "2TB NVMe SSD"],
+      graphics: "NVIDIA RTX 4070 Ti"
+    }
   },
   {
     id: 11,
@@ -100,7 +141,13 @@ export const products: ProductCardProps[] = [
     price: 1899.99,
     oldPrice: 2099.99,
     rating: 4.6,
-    image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+    image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+    specs: {
+      processor: "Intel Core i7-13700K",
+      memory: ["16GB DDR4", "32GB DDR4"],
+      storage: ["1TB NVMe SSD", "2TB NVMe SSD"],
+      graphics: "NVIDIA RTX 4060 Ti"
+    }
   },
   {
     id: 12,
@@ -108,7 +155,13 @@ export const products: ProductCardProps[] = [
     category: "Gaming PC",
     price: 2299.99,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1625842268584-8f3296236761?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+    image: "https://images.unsplash.com/photo-1625842268584-8f3296236761?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+    specs: {
+      processor: "Intel Core i9-13900K",
+      memory: ["16GB DDR5", "32GB DDR5", "64GB DDR5"],
+      storage: ["512GB NVMe SSD", "1TB NVMe SSD", "2TB NVMe SSD"],
+      graphics: "NVIDIA RTX 4070"
+    }
   }
 ];
 

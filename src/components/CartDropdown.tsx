@@ -68,8 +68,8 @@ const CartDropdown = () => {
               </div>
             ) : (
               <div>
-                {items.map((item) => (
-                  <div key={item.id} className="p-4 border-b border-gray-800 flex">
+                {items.map((item, index) => (
+                  <div key={index} className="p-4 border-b border-gray-800 flex">
                     <img
                       src={item.image}
                       alt={item.name}
@@ -77,13 +77,24 @@ const CartDropdown = () => {
                     />
                     <div className="ml-3 flex-1">
                       <h4 className="font-medium text-sm">{item.name}</h4>
+                      {item.selectedOptions && Object.keys(item.selectedOptions).length > 0 && (
+                        <div className="mt-1 text-xs text-gray-400">
+                          {Object.entries(item.selectedOptions)
+                            .filter(([_, value]) => value)
+                            .map(([key, value]) => (
+                              <div key={key} className="capitalize">
+                                {key}: <span className="text-gray-300">{value}</span>
+                              </div>
+                            ))}
+                        </div>
+                      )}
                       <div className="flex justify-between items-center mt-2">
                         <div className="flex items-center space-x-2">
                           <Button
                             variant="outline"
                             size="icon"
                             className="h-6 w-6 p-0"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            onClick={() => updateQuantity(item.id, item.quantity - 1, item.selectedOptions)}
                             disabled={item.quantity <= 1}
                           >
                             <Minus className="h-3 w-3" />
@@ -93,7 +104,7 @@ const CartDropdown = () => {
                             variant="outline"
                             size="icon"
                             className="h-6 w-6 p-0"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            onClick={() => updateQuantity(item.id, item.quantity + 1, item.selectedOptions)}
                           >
                             <Plus className="h-3 w-3" />
                           </Button>
@@ -104,7 +115,7 @@ const CartDropdown = () => {
                             variant="ghost"
                             size="sm"
                             className="h-6 px-2 text-xs text-red-500 hover:text-red-600"
-                            onClick={() => removeItem(item.id)}
+                            onClick={() => removeItem(item.id, item.selectedOptions)}
                           >
                             {translate("remove")}
                           </Button>

@@ -11,19 +11,41 @@ interface ProductAddedModalProps {
     name: string;
     price: number;
     image: string;
+    specs?: {
+      processor?: string;
+      memory?: string[];
+      storage?: string[];
+      graphics?: string;
+      display?: string;
+      [key: string]: string | string[] | undefined;
+    };
   };
   isOpen: boolean;
   onClose: () => void;
+  onAddToCart: (selectedOptions?: Record<string, string>) => void;
 }
 
-const ProductAddedModal = ({ product, isOpen, onClose }: ProductAddedModalProps) => {
+const ProductAddedModal = ({ product, isOpen, onClose, onAddToCart }: ProductAddedModalProps) => {
   const { formatPrice, translate } = useLanguage();
   const [quantity, setQuantity] = useState(1);
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({
+    memory: "",
+    storage: ""
+  });
 
   useEffect(() => {
     if (isOpen) {
       // Prevent body scrolling when modal is open
       document.body.style.overflow = "hidden";
+      
+      // Set default options when modal opens
+      const defaultMemory = product.specs?.memory && product.specs.memory.length > 0 ? product.specs.memory[0] : "";
+      const defaultStorage = product.specs?.storage && product.specs.storage.length > 0 ? product.specs.storage[0] : "";
+      
+      setSelectedOptions({
+        memory: defaultMemory,
+        storage: defaultStorage
+      });
     } else {
       // Restore scrolling when modal is closed
       document.body.style.overflow = "auto";
@@ -32,7 +54,7 @@ const ProductAddedModal = ({ product, isOpen, onClose }: ProductAddedModalProps)
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [isOpen]);
+  }, [isOpen, product.specs]);
 
   if (!isOpen) return null;
 
@@ -42,6 +64,13 @@ const ProductAddedModal = ({ product, isOpen, onClose }: ProductAddedModalProps)
 
   const decrementQuantity = () => {
     setQuantity(q => (q > 1 ? q - 1 : 1));
+  };
+
+  const handleOptionSelect = (type: string, value: string) => {
+    setSelectedOptions(prev => ({
+      ...prev,
+      [type]: value
+    }));
   };
 
   return (
@@ -102,39 +131,51 @@ const ProductAddedModal = ({ product, isOpen, onClose }: ProductAddedModalProps)
           
           {/* Configuration options */}
           <div className="space-y-4 mb-6">
-            <div>
-              <p className="font-medium mb-2 text-white">RAM:</p>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="relative">
-                  <button className="w-full border border-tech-blue bg-white/5 text-white rounded-md py-2 px-3 flex items-center">
-                    RAM 16GB
-                    <span className="absolute -top-2 -right-2 bg-yellow-400 w-4 h-4 rounded-full flex items-center justify-center">
-                      <span className="text-xs text-black">✓</span>
-                    </span>
-                  </button>
+            {product.specs?.memory && product.specs.memory.length > 0 && (
+              <div>
+                <p className="font-medium mb-2 text-white">RAM:</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {product.specs.memory.map((memOption) => (
+                    <div key={memOption} className="relative">
+                      <button 
+                        className={`w-full border ${selectedOptions.memory === memOption ? 'border-tech-blue bg-white/5' : 'border-gray-600'} text-white rounded-md py-2 px-3 flex items-center`}
+                        onClick={() => handleOptionSelect('memory', memOption)}
+                      >
+                        {memOption}
+                        {selectedOptions.memory === memOption && (
+                          <span className="absolute -top-2 -right-2 bg-yellow-400 w-4 h-4 rounded-full flex items-center justify-center">
+                            <span className="text-xs text-black">✓</span>
+                          </span>
+                        )}
+                      </button>
+                    </div>
+                  ))}
                 </div>
-                <button className="w-full border border-gray-600 text-white rounded-md py-2 px-3">
-                  RAM 32GB
-                </button>
               </div>
-            </div>
+            )}
             
-            <div>
-              <p className="font-medium mb-2 text-white">SSD:</p>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="relative">
-                  <button className="w-full border border-tech-blue bg-white/5 text-white rounded-md py-2 px-3 flex items-center">
-                    SSD 256GB
-                    <span className="absolute -top-2 -right-2 bg-yellow-400 w-4 h-4 rounded-full flex items-center justify-center">
-                      <span className="text-xs text-black">✓</span>
-                    </span>
-                  </button>
+            {product.specs?.storage && product.specs.storage.length > 0 && (
+              <div>
+                <p className="font-medium mb-2 text-white">SSD:</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {product.specs.storage.map((storageOption) => (
+                    <div key={storageOption} className="relative">
+                      <button 
+                        className={`w-full border ${selectedOptions.storage === storageOption ? 'border-tech-blue bg-white/5' : 'border-gray-600'} text-white rounded-md py-2 px-3 flex items-center`}
+                        onClick={() => handleOptionSelect('storage', storageOption)}
+                      >
+                        {storageOption}
+                        {selectedOptions.storage === storageOption && (
+                          <span className="absolute -top-2 -right-2 bg-yellow-400 w-4 h-4 rounded-full flex items-center justify-center">
+                            <span className="text-xs text-black">✓</span>
+                          </span>
+                        )}
+                      </button>
+                    </div>
+                  ))}
                 </div>
-                <button className="w-full border border-gray-600 text-white rounded-md py-2 px-3">
-                  SSD 500GB
-                </button>
               </div>
-            </div>
+            )}
           </div>
           
           {/* Quantity and add to cart */}
@@ -156,7 +197,10 @@ const ProductAddedModal = ({ product, isOpen, onClose }: ProductAddedModalProps)
                 +
               </button>
             </div>
-            <Button className="flex-1 bg-red-600 hover:bg-red-700 text-white">
+            <Button 
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+              onClick={() => onAddToCart(selectedOptions)}
+            >
               {translate("addToCart").toUpperCase()}
             </Button>
           </div>
@@ -179,7 +223,9 @@ const ProductAddedModal = ({ product, isOpen, onClose }: ProductAddedModalProps)
           </div>
           
           <Button variant="link" className="text-gray-400 p-0 h-auto hover:text-tech-blue">
-            {translate("viewProductDetails")} »
+            <Link to={`/product/${product.id}`}>
+              {translate("viewProductDetails")} »
+            </Link>
           </Button>
         </div>
       </div>
