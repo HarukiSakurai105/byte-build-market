@@ -17,17 +17,17 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import DatabaseSettings from "./pages/DatabaseSettings";
 import Checkout from "./pages/Checkout";
 
-// Import all admin pages
-import AdminProducts from "./pages/admin/AdminProducts";
-import AdminOrders from "./pages/admin/AdminOrders";
-import AdminCustomers from "./pages/admin/AdminCustomers";
-import AdminPromotions from "./pages/admin/AdminPromotions";
-import AdminInventory from "./pages/admin/AdminInventory";
-import AdminReviews from "./pages/admin/AdminReviews";
-import AdminReports from "./pages/admin/AdminReports";
-import AdminStaff from "./pages/admin/AdminStaff";
-import AdminSettings from "./pages/admin/AdminSettings";
-import AdminProfile from "./pages/admin/AdminProfile";
+// Note: We're importing from components/admin, not pages/admin
+import AdminProducts from "./components/admin/AdminProducts";
+import AdminOrders from "./components/admin/AdminOrders";
+import AdminCustomers from "./components/admin/AdminCustomers";
+import AdminPromotions from "./components/admin/AdminPromotions";
+import AdminInventory from "./components/admin/AdminInventory";
+import AdminReviews from "./components/admin/AdminReviews";
+import AdminReports from "./components/admin/AdminReports";
+import AdminStaff from "./components/admin/AdminStaff";
+import AdminSettings from "./components/admin/AdminSettings";
+import AdminProfile from "./components/admin/AdminProfile";
 
 const App = () => {
   return (
