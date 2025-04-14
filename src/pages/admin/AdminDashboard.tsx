@@ -1,18 +1,32 @@
 
 import React, { useEffect } from 'react';
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useAdmin } from '@/contexts/AdminContext';
 import AdminSidebar from '@/components/admin/AdminSidebar';
-import AdminPosts from '@/components/admin/AdminPosts';
-import AdminDiscounts from '@/components/admin/AdminDiscounts';
 import AdminHeader from '@/components/admin/AdminHeader';
 import AdminLogin from '@/components/admin/AdminLogin';
 import { getConnectionConfig, testConnection } from '@/services/databaseService';
 import { useToast } from '@/hooks/use-toast';
 
+// Import admin page components
+import AdminOverview from '@/components/admin/AdminOverview';
+import AdminPosts from '@/components/admin/AdminPosts';
+import AdminDiscounts from '@/components/admin/AdminDiscounts';
+import AdminProducts from '@/components/admin/AdminProducts';
+import AdminOrders from '@/components/admin/AdminOrders';
+import AdminCustomers from '@/components/admin/AdminCustomers';
+import AdminPromotions from '@/components/admin/AdminPromotions';
+import AdminInventory from '@/components/admin/AdminInventory';
+import AdminReviews from '@/components/admin/AdminReviews';
+import AdminReports from '@/components/admin/AdminReports';
+import AdminStaff from '@/components/admin/AdminStaff';
+import AdminSettings from '@/components/admin/AdminSettings';
+import AdminProfile from '@/components/admin/AdminProfile';
+
 const AdminDashboard = () => {
-  const { isAdmin, isDbConnected, setDbConnected } = useAdmin();
+  const { isAdmin, isDbConnected, setDbConnected, theme } = useAdmin();
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -64,13 +78,13 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100 text-gray-800">
+    <div className={`flex h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-800'}`}>
       <AdminSidebar />
       <div className="flex flex-col flex-1 overflow-hidden">
         <AdminHeader />
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-50">
+        <main className={`flex-1 overflow-y-auto p-4 md:p-6 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
           {!isDbConnected && (
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+            <div className={`${theme === 'dark' ? 'bg-yellow-900/30' : 'bg-yellow-50'} border-l-4 border-yellow-400 p-4 mb-6`}>
               <div className="flex">
                 <div className="flex-shrink-0">
                   <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
@@ -78,9 +92,9 @@ const AdminDashboard = () => {
                   </svg>
                 </div>
                 <div className="ml-3">
-                  <p className="text-sm text-yellow-700">
+                  <p className={`text-sm ${theme === 'dark' ? 'text-yellow-200' : 'text-yellow-700'}`}>
                     Chưa kết nối đến cơ sở dữ liệu SQL Server. Các thay đổi sẽ được lưu tạm thời.{' '}
-                    <a href="/database-settings" className="font-medium underline text-yellow-700 hover:text-yellow-600">
+                    <a href="/database-settings" className={`font-medium underline ${theme === 'dark' ? 'text-yellow-200' : 'text-yellow-700'} hover:text-yellow-600`}>
                       Thiết lập kết nối
                     </a>
                   </p>
@@ -90,10 +104,21 @@ const AdminDashboard = () => {
           )}
           
           <Routes>
-            <Route path="/" element={<Navigate to="/admin/posts" replace />} />
+            <Route path="/" element={<Navigate to="/admin/overview" replace />} />
+            <Route path="/overview" element={<AdminOverview />} />
             <Route path="/posts" element={<AdminPosts />} />
+            <Route path="/products" element={<AdminProducts />} />
+            <Route path="/orders" element={<AdminOrders />} />
+            <Route path="/customers" element={<AdminCustomers />} />
             <Route path="/discounts" element={<AdminDiscounts />} />
-            <Route path="*" element={<Navigate to="/admin/posts" replace />} />
+            <Route path="/promotions" element={<AdminPromotions />} />
+            <Route path="/inventory" element={<AdminInventory />} />
+            <Route path="/reviews" element={<AdminReviews />} />
+            <Route path="/reports" element={<AdminReports />} />
+            <Route path="/staff" element={<AdminStaff />} />
+            <Route path="/settings" element={<AdminSettings />} />
+            <Route path="/profile" element={<AdminProfile />} />
+            <Route path="*" element={<Navigate to="/admin/overview" replace />} />
           </Routes>
         </main>
       </div>

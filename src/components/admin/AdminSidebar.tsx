@@ -1,14 +1,58 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FileText, Tag, Package, Database, LogOut } from 'lucide-react';
+import { 
+  LayoutDashboard, FileText, Tag, Package, Database, LogOut, 
+  ShoppingCart, Users, BarChart2, Settings, Star, Inbox, 
+  Archive, AlertTriangle, Percent
+} from 'lucide-react';
 import { useAdmin } from '@/contexts/AdminContext';
 
 const AdminSidebar = () => {
   const location = useLocation();
-  const { logout } = useAdmin();
+  const { logout, theme } = useAdmin();
 
   const menuItems = [
+    {
+      name: 'Tổng quan',
+      path: '/admin/overview',
+      icon: <LayoutDashboard className="h-5 w-5" />,
+    },
+    {
+      name: 'Sản phẩm',
+      path: '/admin/products',
+      icon: <Package className="h-5 w-5" />,
+    },
+    {
+      name: 'Đơn hàng',
+      path: '/admin/orders',
+      icon: <ShoppingCart className="h-5 w-5" />,
+    },
+    {
+      name: 'Khách hàng',
+      path: '/admin/customers',
+      icon: <Users className="h-5 w-5" />,
+    },
+    {
+      name: 'Khuyến mãi',
+      path: '/admin/promotions',
+      icon: <Percent className="h-5 w-5" />,
+    },
+    {
+      name: 'Kho hàng',
+      path: '/admin/inventory',
+      icon: <Archive className="h-5 w-5" />,
+    },
+    {
+      name: 'Đánh giá',
+      path: '/admin/reviews',
+      icon: <Star className="h-5 w-5" />,
+    },
+    {
+      name: 'Báo cáo',
+      path: '/admin/reports',
+      icon: <BarChart2 className="h-5 w-5" />,
+    },
     {
       name: 'Bài viết',
       path: '/admin/posts',
@@ -20,9 +64,9 @@ const AdminSidebar = () => {
       icon: <Tag className="h-5 w-5" />,
     },
     {
-      name: 'Sản phẩm',
-      path: '/admin/products',
-      icon: <Package className="h-5 w-5" />,
+      name: 'Cài đặt',
+      path: '/admin/settings',
+      icon: <Settings className="h-5 w-5" />,
     },
     {
       name: 'Cơ sở dữ liệu',
@@ -36,8 +80,8 @@ const AdminSidebar = () => {
   };
 
   return (
-    <aside className="w-64 hidden md:flex flex-col bg-gray-800 text-white">
-      <div className="p-4 border-b border-gray-700">
+    <aside className={`w-64 hidden md:flex flex-col ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} shadow-md`}>
+      <div className={`p-4 border-b ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
         <div className="text-2xl font-bold bg-gradient-to-r from-tech-blue to-tech-purple bg-clip-text text-transparent">
           Admin Panel
         </div>
@@ -51,7 +95,9 @@ const AdminSidebar = () => {
               className={`flex items-center px-4 py-2 rounded-md ${
                 isActive(item.path)
                   ? 'bg-tech-blue text-white'
-                  : 'text-gray-300 hover:bg-gray-700'
+                  : theme === 'dark' 
+                    ? 'text-gray-300 hover:bg-gray-700' 
+                    : 'text-gray-700 hover:bg-gray-100'
               }`}
             >
               {item.icon}
@@ -60,10 +106,14 @@ const AdminSidebar = () => {
           ))}
         </nav>
       </div>
-      <div className="p-4 border-t border-gray-700">
+      <div className={`p-4 border-t ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
         <button
           onClick={logout}
-          className="flex items-center justify-center w-full px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md"
+          className={`flex items-center justify-center w-full px-4 py-2 rounded-md ${
+            theme === 'dark' 
+              ? 'text-gray-300 hover:bg-gray-700' 
+              : 'text-gray-700 hover:bg-gray-100'
+          }`}
         >
           <LogOut className="h-5 w-5" />
           <span className="ml-3">Đăng xuất</span>

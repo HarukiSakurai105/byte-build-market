@@ -16,6 +16,15 @@ if (!hasValidClerkKey) {
   console.warn("Missing valid Clerk Publishable Key. To enable authentication, please set the VITE_CLERK_PUBLISHABLE_KEY environment variable with a valid key from https://dashboard.clerk.com/. Authentication features will be limited until this is configured.");
 }
 
+// Add theme setup
+const setInitialTheme = () => {
+  const savedTheme = localStorage.getItem('adminTheme') || 'dark';
+  document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+};
+
+// Run theme setup before rendering
+setInitialTheme();
+
 // Create our app without ClerkProvider when no valid key exists
 if (!hasValidClerkKey) {
   createRoot(document.getElementById("root")!).render(
