@@ -12,10 +12,10 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: "2rem",
       screens: {
-        '2xl': '1400px'
-      }
+        "2xl": "1400px",
+      },
     },
     extend: {
       colors: {
@@ -23,7 +23,11 @@ export default {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
-        foreground: 'hsl(0 0% 0%)', // Set text color to pure black
+        foreground: {
+          DEFAULT: 'hsl(var(--foreground))', // Black in light mode, white in dark mode
+          dark: 'hsl(0, 0%, 100%)', // White for dark mode
+          light: 'hsl(0, 0%, 0%)' // Black for light mode
+        },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))'

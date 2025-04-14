@@ -33,7 +33,11 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground dark:text-foreground-dark;
+  }
+  
+  .dark body {
+    @apply text-foreground-dark;
   }
   
   .tech-gradient {
