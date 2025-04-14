@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useAdmin } from '@/contexts/AdminContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import AdminHeader from '@/components/admin/AdminHeader';
 import AdminLogin from '@/components/admin/AdminLogin';
@@ -25,6 +26,7 @@ import AdminProfile from '@/components/admin/AdminProfile';
 
 const AdminDashboard = () => {
   const { isAdmin, isDbConnected, setDbConnected, theme } = useAdmin();
+  const { language } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
@@ -47,16 +49,20 @@ const AdminDashboard = () => {
           
           if (!connected) {
             toast({
-              title: "Cảnh báo",
-              description: "Không thể kết nối đến cơ sở dữ liệu SQL Server. Vui lòng kiểm tra cấu hình kết nối.",
+              title: language === 'en' ? "Warning" : "Cảnh báo",
+              description: language === 'en' 
+                ? "Could not connect to SQL Server. Please check your connection settings." 
+                : "Không thể kết nối đến cơ sở dữ liệu SQL Server. Vui lòng kiểm tra cấu hình kết nối.",
               variant: "destructive",
             });
           }
         } catch (error) {
           setDbConnected(false);
           toast({
-            title: "Lỗi",
-            description: "Có lỗi xảy ra khi kết nối đến cơ sở dữ liệu.",
+            title: language === 'en' ? "Error" : "Lỗi",
+            description: language === 'en' 
+              ? "An error occurred when connecting to the database." 
+              : "Có lỗi xảy ra khi kết nối đến cơ sở dữ liệu.",
             variant: "destructive",
           });
         }
@@ -66,7 +72,7 @@ const AdminDashboard = () => {
     if (isAdmin) {
       checkDbConnection();
     }
-  }, [isAdmin, setDbConnected, toast]);
+  }, [isAdmin, setDbConnected, toast, language]);
 
   if (!isAdmin) {
     return (
@@ -93,9 +99,11 @@ const AdminDashboard = () => {
                 </div>
                 <div className="ml-3">
                   <p className={`text-sm ${theme === 'dark' ? 'text-yellow-200' : 'text-yellow-700'}`}>
-                    Chưa kết nối đến cơ sở dữ liệu SQL Server. Các thay đổi sẽ được lưu tạm thời.{' '}
+                    {language === 'en' 
+                      ? "Not connected to SQL Server. Changes will be saved temporarily." 
+                      : "Chưa kết nối đến cơ sở dữ liệu SQL Server. Các thay đổi sẽ được lưu tạm thời."}{' '}
                     <a href="/database-settings" className={`font-medium underline ${theme === 'dark' ? 'text-yellow-200' : 'text-yellow-700'} hover:text-yellow-600`}>
-                      Thiết lập kết nối
+                      {language === 'en' ? "Setup connection" : "Thiết lập kết nối"}
                     </a>
                   </p>
                 </div>

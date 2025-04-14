@@ -88,10 +88,6 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     });
   };
 
-  const setDbConnected = (status: boolean) => {
-    setIsDbConnected(status);
-  };
-
   return (
     <AdminContext.Provider value={{ 
       isAdmin, 

@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, FileText, Tag, Package, Database, UserCircle, Settings, LogOut, Moon, Sun, Users, ShoppingCart, BarChart2, Star, Inbox, Archive, AlertTriangle } from 'lucide-react';
+import { Menu, X, FileText, Tag, Package, Database, UserCircle, Settings, LogOut, Moon, Sun, Users, ShoppingCart, BarChart2, Star, Inbox, Archive, AlertTriangle, Lock } from 'lucide-react';
 import { useAdmin } from '@/contexts/AdminContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -10,9 +11,14 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 const AdminHeader = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { logout, adminProfile, theme, setTheme } = useAdmin();
+  const { language, setLanguage } = useLanguage();
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'vi' : 'en');
   };
 
   return (
@@ -29,11 +35,21 @@ const AdminHeader = () => {
           </Button>
           <Link to="/admin" className="ml-2 md:ml-0">
             <h1 className="text-xl font-bold bg-gradient-to-r from-tech-blue to-tech-purple bg-clip-text text-transparent">
-              Admin Dashboard
+              {language === 'en' ? 'Admin Dashboard' : 'Quản Trị Hệ Thống'}
             </h1>
           </Link>
         </div>
         <div className="flex items-center space-x-4">
+          {/* Language Toggle */}
+          <Button 
+            onClick={toggleLanguage} 
+            variant="ghost" 
+            className={theme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'}
+          >
+            {language === 'en' ? 'VI' : 'EN'}
+          </Button>
+          
+          {/* Theme Toggle */}
           <Button 
             onClick={toggleTheme} 
             variant="ghost" 
@@ -44,9 +60,10 @@ const AdminHeader = () => {
           </Button>
           
           <Link to="/" className={`text-sm ${theme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} mr-2 hidden md:block`}>
-            Về trang chính
+            {language === 'en' ? 'Back to Store' : 'Về trang chính'}
           </Link>
           
+          {/* Admin Profile Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
@@ -68,20 +85,26 @@ const AdminHeader = () => {
                 <DropdownMenuItem>
                   <Link to="/admin/profile" className="flex items-center w-full">
                     <UserCircle className="mr-2 h-4 w-4" />
-                    <span>Thông tin cá nhân</span>
+                    <span>{language === 'en' ? 'My Profile' : 'Thông tin cá nhân'}</span>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Link to="/admin/settings" className="flex items-center w-full">
                     <Settings className="mr-2 h-4 w-4" />
-                    <span>Cài đặt hệ thống</span>
+                    <span>{language === 'en' ? 'Settings' : 'Cài đặt giao diện'}</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link to="/admin/change-password" className="flex items-center w-full">
+                    <Lock className="mr-2 h-4 w-4" />
+                    <span>{language === 'en' ? 'Change Password' : 'Đổi mật khẩu'}</span>
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logout}>
                 <LogOut className="mr-2 h-4 w-4" />
-                <span>Đăng xuất</span>
+                <span>{language === 'en' ? 'Log out' : 'Đăng xuất'}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -99,7 +122,7 @@ const AdminHeader = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <BarChart2 className="h-5 w-5 mr-3" />
-                <span>Tổng quan</span>
+                <span>{language === 'en' ? 'Overview' : 'Tổng quan'}</span>
               </Link>
             </li>
             <li>
@@ -109,7 +132,7 @@ const AdminHeader = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <Package className="h-5 w-5 mr-3" />
-                <span>Sản phẩm</span>
+                <span>{language === 'en' ? 'Products' : 'Sản phẩm'}</span>
               </Link>
             </li>
             <li>
@@ -119,7 +142,7 @@ const AdminHeader = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <ShoppingCart className="h-5 w-5 mr-3" />
-                <span>Đơn hàng</span>
+                <span>{language === 'en' ? 'Orders' : 'Đơn hàng'}</span>
               </Link>
             </li>
             <li>
@@ -129,7 +152,7 @@ const AdminHeader = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <Users className="h-5 w-5 mr-3" />
-                <span>Khách hàng</span>
+                <span>{language === 'en' ? 'Customers' : 'Khách hàng'}</span>
               </Link>
             </li>
             <li>
@@ -139,7 +162,7 @@ const AdminHeader = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <Tag className="h-5 w-5 mr-3" />
-                <span>Giảm giá</span>
+                <span>{language === 'en' ? 'Discounts' : 'Giảm giá'}</span>
               </Link>
             </li>
             <li>
@@ -149,7 +172,7 @@ const AdminHeader = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <Archive className="h-5 w-5 mr-3" />
-                <span>Kho hàng</span>
+                <span>{language === 'en' ? 'Inventory' : 'Kho hàng'}</span>
               </Link>
             </li>
             <li>
@@ -159,7 +182,7 @@ const AdminHeader = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <Star className="h-5 w-5 mr-3" />
-                <span>Đánh giá</span>
+                <span>{language === 'en' ? 'Reviews' : 'Đánh giá'}</span>
               </Link>
             </li>
             <li>
@@ -169,7 +192,7 @@ const AdminHeader = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <FileText className="h-5 w-5 mr-3" />
-                <span>Bài viết</span>
+                <span>{language === 'en' ? 'Posts' : 'Bài viết'}</span>
               </Link>
             </li>
             <li>
@@ -179,7 +202,7 @@ const AdminHeader = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <BarChart2 className="h-5 w-5 mr-3" />
-                <span>Báo cáo</span>
+                <span>{language === 'en' ? 'Reports' : 'Báo cáo'}</span>
               </Link>
             </li>
             <li>
@@ -189,7 +212,7 @@ const AdminHeader = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <Database className="h-5 w-5 mr-3" />
-                <span>Cơ sở dữ liệu</span>
+                <span>{language === 'en' ? 'Database' : 'Cơ sở dữ liệu'}</span>
               </Link>
             </li>
           </ul>
