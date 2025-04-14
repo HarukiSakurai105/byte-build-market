@@ -73,7 +73,7 @@ const CreditCardForm = ({ onSubmit }: CreditCardFormProps) => {
   };
 
   return (
-    <div className="rounded-lg border border-gray-800 overflow-hidden">
+    <div className="rounded-lg border border-gray-800 overflow-hidden text-white">
       <div className="p-6 border-b border-gray-800">
         <h2 className="text-xl font-semibold mb-4 flex items-center">
           <CreditCard className="mr-2 h-5 w-5 text-tech-blue" />

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, CreditCard, Wallet, CheckCircle, Banknote, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,14 @@ import Footer from "@/components/Footer";
 import CreditCardForm, { CreditCardFormData } from "@/components/CreditCardForm";
 import SearchBar from "@/components/SearchBar";
 
+// Mock saved wallet data - in a real app, this would come from a user profile or API
+const mockSavedWallet = {
+  walletId: "wallet-123",
+  walletType: "Digital Wallet",
+  walletName: "My Digital Wallet",
+  balance: 1500.00
+};
+
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const { items, totalPrice, clearCart } = useCart();
@@ -23,10 +31,22 @@ const CheckoutPage = () => {
   const [isOrderConfirmed, setIsOrderConfirmed] = useState(false);
   const [showCreditCardForm, setShowCreditCardForm] = useState(false);
   const [creditCardInfo, setCreditCardInfo] = useState<CreditCardFormData | null>(null);
+  const [hasWallet, setHasWallet] = useState(false);
+
+  // Simulate checking if user has wallet
+  useEffect(() => {
+    // In a real app, this would be an API call or user context check
+    // For demo purposes, we'll just set it to true after a short delay
+    const timer = setTimeout(() => {
+      setHasWallet(true);
+    }, 500);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col text-white">
         <Navbar />
         <div className="container mx-auto px-4 py-16 flex-grow flex flex-col items-center justify-center">
           <h1 className="text-2xl font-bold mb-4">{translate("emptyCart")}</h1>
@@ -84,7 +104,7 @@ const CheckoutPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col text-white">
       <Navbar />
       
       <div className="container mx-auto px-4 py-8 flex-grow">
@@ -205,6 +225,21 @@ const CheckoutPage = () => {
                       </div>
                     </label>
                   </div>
+                  
+                  {hasWallet && (
+                    <div className="flex items-center space-x-2 rounded-lg border border-gray-800 p-4 cursor-pointer hover:bg-gray-900 transition-colors">
+                      <RadioGroupItem value="wallet" id="wallet" />
+                      <label htmlFor="wallet" className="flex items-center gap-3 flex-1 cursor-pointer">
+                        <Wallet className="h-5 w-5 text-tech-blue" />
+                        <div>
+                          <div className="font-medium">{mockSavedWallet.walletName}</div>
+                          <div className="text-sm text-gray-400">
+                            {translate("balance")}: {formatPrice(mockSavedWallet.balance)}
+                          </div>
+                        </div>
+                      </label>
+                    </div>
+                  )}
                 </RadioGroup>
               </div>
               
@@ -279,17 +314,20 @@ const CheckoutPage = () => {
               {paymentMethod === "cash" && <Wallet className="h-5 w-5 text-tech-blue" />}
               {paymentMethod === "bank" && <Banknote className="h-5 w-5 text-tech-blue" />}
               {paymentMethod === "credit" && <CreditCard className="h-5 w-5 text-tech-blue" />}
+              {paymentMethod === "wallet" && <Wallet className="h-5 w-5 text-tech-blue" />}
               
               <div>
                 <div className="font-medium">
                   {paymentMethod === "cash" && translate("cashOnDelivery")}
                   {paymentMethod === "bank" && translate("bankTransfer")}
                   {paymentMethod === "credit" && translate("creditCard")}
+                  {paymentMethod === "wallet" && mockSavedWallet.walletName}
                 </div>
                 <div className="text-sm text-gray-400">
                   {paymentMethod === "cash" && translate("payWhenReceived")}
                   {paymentMethod === "bank" && translate("payViaTransfer")}
                   {paymentMethod === "credit" && translate("secureCardPayment")}
+                  {paymentMethod === "wallet" && `${translate("balance")}: ${formatPrice(mockSavedWallet.balance)}`}
                 </div>
               </div>
             </div>
