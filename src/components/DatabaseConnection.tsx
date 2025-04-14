@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAdmin } from '@/contexts/AdminContext';
 import { Loader2 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { saveConnectionConfig, testConnection } from '@/services/databaseService';
 
 // Định nghĩa interface cho các thông tin kết nối
 interface ConnectionSettings {
@@ -19,6 +21,7 @@ interface ConnectionSettings {
 const DatabaseConnection = () => {
   const { translate } = useLanguage();
   const { toast } = useToast();
+  const { setDbConnected } = useAdmin();
   const [isConnecting, setIsConnecting] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [settings, setSettings] = useState<ConnectionSettings>({
@@ -53,16 +56,30 @@ const DatabaseConnection = () => {
       description: `${settings.serverAddress}/${settings.databaseName}`,
     });
 
-    // Simulate connection (in a real app, this would be an actual API call)
     try {
-      // This is just a mockup - in a real implementation, this would be replaced with actual SQL Server connection code
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Convert settings to SqlServerConfig format
+      const config = {
+        server: settings.serverAddress,
+        database: settings.databaseName,
+        user: settings.username,
+        password: settings.password,
+        options: {
+          encrypt: true,
+          trustServerCertificate: true,
+        }
+      };
+
+      // Save connection config and test it
+      saveConnectionConfig(config);
+      const connected = await testConnection(config);
       
-      // Mock successful connection
-      setIsConnected(true);
+      setIsConnected(connected);
+      setDbConnected(connected);
+      
       toast({
-        title: translate('success'),
-        description: translate('connectionSuccess'),
+        title: connected ? translate('success') : translate('error'),
+        description: connected ? translate('connectionSuccess') : translate('connectionFailed'),
+        variant: connected ? 'default' : 'destructive',
       });
     } catch (error) {
       toast({
@@ -70,6 +87,8 @@ const DatabaseConnection = () => {
         description: translate('connectionFailed'),
         variant: 'destructive',
       });
+      setIsConnected(false);
+      setDbConnected(false);
     } finally {
       setIsConnecting(false);
     }
@@ -77,6 +96,7 @@ const DatabaseConnection = () => {
 
   const handleDisconnect = () => {
     setIsConnected(false);
+    setDbConnected(false);
     setSettings({
       serverAddress: '',
       databaseName: '',
